@@ -11,14 +11,16 @@ export const useRoutes = (isLogin) => {
             <Routes>
                 <Route path='/' element = {<MainPage/>} />
                 <Route path='/create-post' element = {<CreatePostPage/>} />
+                <Route path='*' element = {<Navigate to = '/' replace/>} />
+                <Route path='*' element = {<Navigate to = '/create-post' replace/>} />
             </Routes>
         )
     } else {
         return (
             <Routes>
                 <Route path='/auth/*' element = {<AuthPage/>} />
-                <Route path = '*' element = {<Navigate to='/auth/login' replace/>}/>
-                <Route path = '*' element = {<Navigate to='/auth/registration' replace/>}/>
+                <Route path='*' element = {<Navigate to = '/auth/login' replace/>} />
+                <Route path='*' element = {<Navigate to = '/auth/registration' replace/>} />
             </Routes>
         )
     }
