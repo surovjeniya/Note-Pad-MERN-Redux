@@ -10,5 +10,5 @@ Emaxple : Create Note App #noteapp
 -Node.js,Express,Mongo DB
 
 # Watch here
-https://warm-manatee-be7b27.netlify.app
+https://splendorous-medovik-2eab50.netlify.app/
 
