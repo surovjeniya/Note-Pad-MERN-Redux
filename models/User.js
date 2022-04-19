@@ -15,7 +15,13 @@ const userSchema = new Schema({
         type:String,
         required:true,
         unique:true
-    }
+    },
+    posts: [
+        {
+            type:Types.ObjectId,
+            ref:'Post'
+        }
+    ]
 })
 
 module.exports = model('User',userSchema)

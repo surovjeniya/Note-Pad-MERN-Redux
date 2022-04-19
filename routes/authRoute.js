@@ -52,7 +52,7 @@ router.post('/registration',
         })
     }
 })
-
+// /api/auth/login
 router.post('/login',
     [
         check('email','Incorrect email').isEmail(),

@@ -1,30 +1,29 @@
-import React from 'react'
+import { Fragment } from "react"
 import {BrowserRouter as Router} from 'react-router-dom'
+import { Header } from "./components/Header/Header"
+import {useRouter} from './routes/router'
 import {AppContext} from './context/AppContext'
 import {useAuth} from './hooks/auth.hook'
-import {useRoutes} from './routes/routes'
+
+export default function App() {
 
 
-function App() {
+    const {token,userId,login,logout,isReady} = useAuth()
+    const isLogin = !!token;
+    const router = useRouter(isLogin)
 
-  const {token,userId,logOut,logIn} = useAuth()
-  const isLogin = !!token
-  const routes = useRoutes(isLogin)
+    const value = {
+        token,userId,login,logout,isReady
+    }
 
-
-  const value = {
-    token,userId,logOut,logIn
-  }
-
-  return (
-    <AppContext.Provider value = {value}>
-      <Router>
-        <div className="app">
-          {routes}
-        </div>
-      </Router>
-    </AppContext.Provider>
-  );
+    return (
+        <AppContext.Provider value = {value}>
+            <Fragment>
+                <Router>
+                    <Header/>
+                    {router}
+                </Router>
+            </Fragment>
+        </AppContext.Provider>
+    )
 }
-
-export default App;

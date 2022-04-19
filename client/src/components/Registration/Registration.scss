@@ -1,0 +1,15 @@
+.registration {
+    &__btn {
+        display: flex;
+        margin-right: 2rem;
+    }
+    &__form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    &__controls {
+        display: flex;
+        align-items: center;
+        margin-top: 2rem;
+    }
+}

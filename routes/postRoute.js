@@ -1,34 +1,22 @@
 const {Router} = require('express')
+const res = require('express/lib/response')
 const router = Router()
 const Post = require('../models/Post')
 
 
-
-router.get('/post-list',async (req,res) => {
-    try {
-        const posts = await Post.find({})
-        res.status(200).json({
-            message:'Posts loaded.',
-            posts
-        })
-    } catch(e) {
-        res.status(500).json({
-            message:'Posts not loaded.Try again',
-            error:e.message
-        })
-    }
-})
+'/api/post'
 
 router.post('/create-post',async (req,res) => {
     try {
-        const {title} = req.body
-        const post = await new Post({
-            title
+        const {title,hashTags,userId} = req.body
+        const post = new Post({
+            title,hashTags,owner:userId
         })
         await post.save()
         res.status(201).json({
-            message:'Port'
+            message: 'note added'
         })
+
     } catch(e) {
         res.status(500).json({
             message:"Create post error",
@@ -37,40 +25,19 @@ router.post('/create-post',async (req,res) => {
     }
 })
 
-router.put('/important-post',async (req,res) => {
+router.get('/post-list/',async(req,res) => {
     try {
-        const {id} = req.body
-        const candidate = await Post.findById(id)
-
-        await Post.findByIdAndUpdate(id,{
-            important:!candidate.inportant
-        })
-        res.status(201).json({
-            message:candidate.important ? 'Post important' : 'Post unimportant'
-        })
+       const {userId} = req.query
+       const posts = await Post.find({
+           owner:userId
+       })
+       res.status(200).json({
+           message:'Notes updated',
+           posts
+       })
     } catch(e) {
         res.status(500).json({
-            message:"Important post error",
-            error:e.message
-        })
-    }
-})
-
-router.put('/done-post',async (req,res) => {
-    try {
-        const {id} = req.body
-
-        const candidate = await Post.findById(id)
-        await Post.findByIdAndUpdate(id,{
-            done:!candidate.done
-        })
-
-        res.status(200).json({
-            message:candidate.done ? 'Post done' : 'Post undone'
-        })
-    } catch(e) {
-        res.status(500).json({
-            message:'Done post error',
+            message:'Error updating.Try again',
             error:e.message
         })
     }
@@ -78,17 +45,19 @@ router.put('/done-post',async (req,res) => {
 
 router.delete('/delete-post/:id',async (req,res) => {
     try {
-        await Post.findByIdAndRemove(req.params.id)
+        await Post.findByIdAndDelete(req.params.id)
         res.status(200).json({
-            message:'Post will be deleted'
+            message:'Post wil be deleted'
         })
-    } catch(e) {
+
+    }catch(e) {
         res.status(500).json({
-            message:'Delete error.Try again',
+            message:'deleting error',
             error:e.message
         })
     }
 })
+
 
 
 module.exports = router

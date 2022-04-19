@@ -1,4 +1,4 @@
-const {Schema,model} = require('mongoose')
+const {Schema,model,Types} = require('mongoose')
 
 
 const postSchema = new Schema({
@@ -6,16 +6,13 @@ const postSchema = new Schema({
         type:String,
         required:true,
     },
-    important: {
-        type:Boolean,
-        required:true,
-        default:false
+    hashTags:{
+        type:Array
     },
-    important: {
-        type:Boolean,
-        required:true,
-        default:false
-    },
+    owner: {
+        type:Types.ObjectId,
+        ref:'User'
+    }
 })
 
 module.exports = model('Post',postSchema)
